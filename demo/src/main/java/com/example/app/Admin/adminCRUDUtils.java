@@ -18,7 +18,7 @@ public class adminCRUDUtils {
 
     private static final String INSERT_INTO_parents = "INSERT INTO parents (parent_username,parent_password,student_id) VALUES (? ,? ,?);";
     private static final String INSERT_INTO_students = "INSERT INTO students (student_id,student_username,student_password) VALUES (? ,? ,?);";
-    private static final String INSERT_INTO_teachers = "INSERT INTO teachers (teacher_username,teacher_password,teacher_course,teacher_course_id) VALUES (?,?,?,?));";
+    private static final String INSERT_INTO_teachers = "INSERT INTO teachers (teacher_username,teacher_password,teacher_course,teacher_course_id) VALUES (?,?,?,?);";
 
 
     public static List<seeAllMarks> getMarks(String query){
@@ -115,12 +115,13 @@ public class adminCRUDUtils {
 
 
         while(rs.next()){
-            int teacher_cousre_idd = rs.getInt("teacher_cousre_id");
+            
             String teacher_usernamee = rs.getString("teacher_username");
             String teacher_passwordd = rs.getString("teacher_password");
             String teacher_coursee = rs.getString("teacher_course");
+            int teacher_course_idd = rs.getInt("teacher_course_id");
 
-            createdTeacher.add(new teacher(teacher_usernamee,teacher_passwordd,teacher_coursee,teacher_cousre_idd));
+            createdTeacher.add(new teacher(teacher_usernamee,teacher_passwordd,teacher_coursee,teacher_course_idd));
         }
 
         } catch (SQLException throwables){

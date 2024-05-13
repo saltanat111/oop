@@ -37,5 +37,5 @@ INSERT INTO students (student_id,student_username,student_password) VALUES (7,'S
 
 DROP TABLE IF EXISTS marks;
 CREATE TABLE marks (id BIGINT PRIMARY key AUTO_INCREMENT,student_id INTEGER,teacher_course VARCHAR(80),mark INT);
-INSERT INTO marks (student_id,teacher_course,mark) VALUES (1,'history',90);
+INSERT INTO marks (student_id,teacher_course,mark) VALUES (1,'history',97);
 INSERT INTO marks (student_id,teacher_course,mark) VALUES (2,'biology',95);
