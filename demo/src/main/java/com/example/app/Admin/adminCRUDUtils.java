@@ -20,6 +20,8 @@ public class adminCRUDUtils {
     private static final String INSERT_INTO_students = "INSERT INTO students (student_id,student_username,student_password) VALUES (? ,? ,?);";
     private static final String INSERT_INTO_teachers = "INSERT INTO teachers (teacher_username,teacher_password,teacher_course,teacher_course_id) VALUES (?,?,?,?);";
     private static final String UPDATE_student = "UPDATE students SET student_username = ?,student_password=? WHERE student_id = ?;";
+    private static final String UPDATE_teacher = "UPDATE teachers SET teacher_password = ?,teacher_course = ?,teacher_course_id = ? WHERE teacher_username = ?;";
+    private static final String UPDATE_parent = "UPDATE teachers SET parent_password = ?,student_id = ? WHERE parent_username = ?;";
 
 
     public static List<seeAllMarks> getMarks(String query){
@@ -130,14 +132,16 @@ public class adminCRUDUtils {
         }
         return createdTeacher;
     }
+
     public static List<student> updateStudentProfile(int student_id, String student_username,String student_password)
     {
+        // "UPDATE students SET student_username = ?,student_password=? WHERE student_id = ?;";
         List <student> updateStudents = new ArrayList<>();
         try (Connection connection = DBUtils.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_student))        {
-            preparedStatement.setInt(1, student_id);
-            preparedStatement.setString(2, student_username);
-            preparedStatement.setString(3,student_password);
+            preparedStatement.setString(1, student_username);
+            preparedStatement.setString(2, student_password);
+            preparedStatement.setInt(3,student_id);
             preparedStatement.executeUpdate();
 
             PreparedStatement allStudents = connection.prepareStatement("SELECT * FROM students");
@@ -159,10 +163,69 @@ public class adminCRUDUtils {
 
         return updateStudents;
     }
-    
-    
 
+    public static List<teacher> updateTeacherProfile(String teacher_username, String teacher_password, String teacher_course,int teacher_course_id)
+    {
+        //UPDATE teachers SET teacher_password = ?,teacher_course = ?,teacher_course_id = ? WHERE teacher_username = ?;
+        List <teacher> updateTeacher = new ArrayList<>();
+        try (Connection connection = DBUtils.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_teacher))        {
+            preparedStatement.setString(1,teacher_password);
+            preparedStatement.setString(2,teacher_course);
+            preparedStatement.setInt(3,teacher_course_id);
+            preparedStatement.setString(4, teacher_username);
 
+            PreparedStatement allStudents = connection.prepareStatement("SELECT * FROM students");
+            ResultSet rs = allStudents.executeQuery();
+
+            while (rs.next()) {
+                String teacher_usernamee = rs.getString("teacher_username");
+                String teacher_passwordd = rs.getString("teacher_password");
+                String teacher_coursee = rs.getString("teacher_course");
+                int teacher_course_idd = rs.getInt("teacher_course_id");
+
+                updateTeacher.add(new teacher (teacher_usernamee,teacher_passwordd,teacher_coursee,teacher_course_idd));
+            }
+
+        } 
+        catch (SQLException throwable) 
+        {
+            throwable.printStackTrace();
+        }
+
+        return updateTeacher;
+
+    }
     
+    public static List<parent> updateParentProfile(String parent_username,String parent_password,int student_id)
+    {
+        // UPDATE teachers SET parent_password = ?,student_id = ? WHERE parent_username = ?;
+        List <parent> updateParent = new ArrayList<>();
+        try (Connection connection = DBUtils.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_parent))        {
+            preparedStatement.setString(1,parent_password);
+            preparedStatement.setInt(2, student_id);
+            preparedStatement.setString(3,parent_username);
+
+            preparedStatement.executeUpdate();
+    
+            PreparedStatement allMarks = connection.prepareStatement("SELECT * FROM parents");
+            ResultSet rs = allMarks.executeQuery();
+
+            while(rs.next()){
+                int student_idn = rs.getInt("student_id");
+                String parent_usernamee = rs.getString("parent_username");
+                String parent_passwordd = rs.getString("parent_password");
+    
+                updateParent.add(new parent(parent_usernamee,parent_passwordd,student_idn));
+            }
+        } 
+        catch (SQLException throwable) 
+        {
+            throwable.printStackTrace();
+        }
+
+        return updateParent;
+    }
     
 }
