@@ -1,5 +1,7 @@
 package com.example.app.Student;
 
+import java.util.List;
+
 import com.example.app.user.user;
 
 public class student extends user {
@@ -22,6 +24,17 @@ public class student extends user {
     @Override
     public String toString() {
         return "student [userName=" + userName + ", password=" + password + ", student_id=" + student_id + "]";
+    }
+
+    public static void menu() {
+        System.out.println("1 - see ma all marks");
+    }
+
+    public static String executeActionAccordingToStudentsChoise(int studentChoise,int student_id) {
+       String resultToReturn = null;
+       List <putEditMarks> myMarks = studentCRUDUtils.getMarks(student_id);
+       resultToReturn = myMarks.toString();
+       return resultToReturn;
     }
     
     

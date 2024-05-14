@@ -32,5 +32,17 @@ public class teacher extends user {
     public void setTeacher_course_id(int teacher_course_id) {
         this.teacher_course_id = teacher_course_id;
     }
+
+    public static String executeActionAccordingToTeachersChoise(int teacherChoise) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'executeActionAccordingToTeachersChoise'");
+    }
+
+    public static void menu() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'menu'");
+    }
+
+    
     
 }

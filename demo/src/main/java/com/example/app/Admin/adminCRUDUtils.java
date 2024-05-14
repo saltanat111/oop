@@ -175,7 +175,7 @@ public class adminCRUDUtils {
             preparedStatement.setInt(3,teacher_course_id);
             preparedStatement.setString(4, teacher_username);
 
-            PreparedStatement allStudents = connection.prepareStatement("SELECT * FROM students");
+            PreparedStatement allStudents = connection.prepareStatement("SELECT * FROM teachers");
             ResultSet rs = allStudents.executeQuery();
 
             while (rs.next()) {

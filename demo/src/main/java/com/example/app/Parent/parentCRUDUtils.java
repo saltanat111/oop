@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.app.Admin.DBUtils;
+import com.example.app.Admin.seeAllMarks;
 import com.example.app.Student.putEditMarks;
+
 
 public class parentCRUDUtils {
     private static String queryAccordingToStudent_id = "SELECT * FROM marks WHERE student_id = ?;";
 
-        public static List<putEditMarks> getMarks(int student_id){
+     public static List<putEditMarks> getMarks(int student_id){
         List <putEditMarks> marks = new ArrayList<>();
 
         try (Connection connection = DBUtils.getConnection();
@@ -38,5 +40,4 @@ public class parentCRUDUtils {
         }
         return marks;
     }
-    
 }

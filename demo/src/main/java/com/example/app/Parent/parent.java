@@ -1,5 +1,9 @@
 package com.example.app.Parent;
 
+import java.util.List;
+
+import com.example.app.Admin.seeAllMarks;
+import com.example.app.Student.putEditMarks;
 import com.example.app.user.user;
 
 public class parent extends user{
@@ -22,6 +26,17 @@ public class parent extends user{
         this.student_id = student_id;
         this.password = parent_password;
         this.userName = parent_username;
+    }
+
+    public static void menu() {
+       System.out.println("1 - show student's marks");
+    }
+
+    public static String executeActionAccordingToParentsChoise(int parentChoise, int child_id) {
+        String resultToReturn = null;
+        List<putEditMarks> allMarks = parentCRUDUtils.getMarks(child_id);
+        resultToReturn = allMarks.toString();
+        return resultToReturn;
     }
     
     

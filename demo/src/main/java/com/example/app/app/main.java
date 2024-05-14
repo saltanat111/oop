@@ -25,86 +25,147 @@ public class main {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please enter your role: \n 1 - admin \n 2 - teacher \n 3 - student \n 4 - parent");
         int role = scan.nextInt();
+        scan.nextLine();
         while (role>4||role<1)
         {
             System.out.println("Please enter your role: \n 1 - admin \n 2 - teacher \n 3 - student \n 4 - parent");
             role = scan.nextInt();
         }
         System.out.println("Enter your username:");
-        String username = scan.next();
+        String username = scan.nextLine();
         System.out.println("Enter your password: ");
-        String password = scan.next();
-        String passwordCheck = passwordCheck(username, role);
-        if (password.equals(passwordCheck))
+        String password = scan.nextLine();
+        
+        if (role == 1)
         {
-            if (role == 1)
+            String adminPassword = getAdminPassword(username);
+            if(password.equals(adminPassword))
             {
-                System.out.println("Dear admin, welcome to the grading system!");
+                System.out.println("Dear admin, welcome to the grading system!\nChoose what do you want to do and enter the number of the command you want to perform");
                 admin.menu();
+                int adminsChoise = scan.nextInt();
+                while(adminsChoise>7||adminsChoise<1)
+                {
+                    System.out.println("Enter command only from 1 to 7");
+                    adminsChoise = scan.nextInt();
+                    scan.nextLine();
+                }
+                String result = admin.executeActionAccordingToAdminsChoise(adminsChoise);
+                System.out.println(result);
+            }
+            
+        }
+        else if (role == 2)
+        {
+            String teacherPassword = getTeacherPassword(username);
+            if(password.equals(teacherPassword))
+            {
+                System.out.println("Dear teacher welcome to the grading system!\nChoose what do you want to do and enter the number of the command:");
+                teacher.menu();
+                int teacherChoise = scan.nextInt();
+                scan.nextLine();
+                String result = teacher.executeActionAccordingToTeachersChoise(teacherChoise);
+                System.out.println(result);
+            }
+            else
+            {
+
             }
         }
-        else{
+        else if(role == 3)
+        {
+            String studentPassword = getStudentPassword(username);
+            int student_id = getStudentIdAccordingToStudentsUsername(username);
+            if(password.equals(studentPassword))
+            {
+                System.out.println("Dear student welcome to the grading system!\nChoose what do you want to do and enter the number of the command:");
+                student.menu();
+                int studentChoise = scan.nextInt();
+                scan.nextLine();
+                String result = student.executeActionAccordingToStudentsChoise(studentChoise,student_id);
+                System.out.println(result);
+            }
+            else
+            {
+
+            }
+
+        }
+        else if(role == 4)
+        {
+            String parentPassword = getParentPassword(username);
+            if(password.equals(parentPassword))
+            {
+                System.out.println("Dear parent welcome to the grading system!\nChoose what do you want to do and enter the number of the command:");
+                parent.menu();
+                int parentChoise = scan.nextInt();
+                scan.nextLine();
+                int child_id = getChildIdAccordingToParentUserName(username);
+                String result = parent.executeActionAccordingToParentsChoise(parentChoise,child_id);
+                System.out.println(result);
+            }
+            else
+            {
+
+            }
+
+        }
+        else
+        {
             System.out.println("bye");
         }
 
-        
-       // passwordCheck("admin", 1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // List <seeAllMarks> marks = teacherCRUDUtils.getMarks("select marks.teacher_course, marks.mark, students.student_username from marks join students on students.student_id = marks.student_id");
-        // // //see all marks
-        // for (int i = 0;i<marks.size();i++)
-        // {
-        //     System.out.println(marks.get(i));
-        // }
-        // //put mark
-        // List <putEditMarks> mark = teacherCRUDUtils.putMarks(2,"history",89);
-        // for (int i = 0;i<mark.size();i++)
-        // {
-        //     System.out.println(mark.get(i));
-        // }
-        // List <putEditMarks> mar = teacherCRUDUtils.editMarks(2,"biology",100);
-        // for (int i = 0;i<mar.size();i++)
-        // {
-        //     System.out.println(mar.get(i));
-        // }
-           // List <putEditMarks> myMarks = studentCRUDUtils.getMarks(1);
-            //System.out.println(myMarks);
-            // List<student> newStudent = adminCRUDUtils.createStudentProfile(8, "elena", "123");
-            // List<parent> newParent = adminCRUDUtils.createParentProfile( "elenaMama", "123M",8);
-            // for (int i = 0;i<newParent.size();i++)
-            // {
-            //     System.out.println(newParent.get(i));
-            // }
-            
-            //     System.out.println(newStudent.get(newStudent.size()-1));
-                //List<teacher>  techer = adminCRUDUtils.createTeacherProfile("teacher", "123", "algebra", 9);
-                //System.out.println(techer);
-            
-            
-    
     }
         
-    public static String passwordCheck(String username,int role)
+    private static int getChildIdAccordingToParentUserName(String username) {
+        int child_id = 0;
+        String queryToFindPasword = null;
+             queryToFindPasword = "SELECT student_id from parents WHERE parent_username = ?";
+
+        try (Connection connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword))
+            {
+                preparedStatement.setString(1, username);
+                ResultSet rs = preparedStatement.executeQuery();
+
+                if (rs.next()){
+                    child_id = rs.getInt("student_id");
+                }
+                    
+            }catch(SQLException throwables){
+                throwables.printStackTrace();;
+            }
+            return child_id;   
+    }
+    private static int getStudentIdAccordingToStudentsUsername (String username) {
+        int myID = 0;
+        String queryToFindPasword = null;
+             queryToFindPasword = "SELECT student_id from students WHERE student_username = ?";
+
+        try (Connection connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword))
+            {
+                preparedStatement.setString(1, username);
+                ResultSet rs = preparedStatement.executeQuery();
+
+                if (rs.next()){
+                    myID = rs.getInt("student_id");
+                }
+                    
+            }catch(SQLException throwables){
+                throwables.printStackTrace();;
+            }
+            return myID;   
+    }
+
+    public static String getAdminPassword(String username)
     {
         String password = null;
         String queryToFindPasword = null;
-        if (role == 1)
-        {
+        
              queryToFindPasword = "SELECT * from admins WHERE admin_username = ?";
 
-        }
+        
         try (Connection connection = DBUtils.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword))
             {
@@ -129,33 +190,60 @@ public class main {
             }
             return password;
     }
+    public static String getTeacherPassword(String username)
+    {
+        String password = null;
+        String queryToFindPasword = null;
+             queryToFindPasword = "SELECT teacher_password from teachers WHERE teacher_username = ?";
+        try (Connection connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword)){
+                preparedStatement.setString(1, username);
+                ResultSet rs = preparedStatement.executeQuery();
+                if(rs.next()){
+                    password = rs.getString("teacher_password");
+
+                }
+            }catch(SQLException throwables){
+                throwables.printStackTrace();;
+            }
+            return password;
+    }
+    public static String getParentPassword(String username)
+    {
+        String password = null;
+        String queryToFindPasword = null;
+             queryToFindPasword = "SELECT parent_password from parents WHERE parent_username = ?";
+        try (Connection connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword)){
+                preparedStatement.setString(1, username);
+                ResultSet rs = preparedStatement.executeQuery();
+                if(rs.next()){
+                    password = rs.getString("parent_password");
+
+                }
+            }catch(SQLException throwables){
+                throwables.printStackTrace();;
+            }
+            return password;
+    }
+    public static String getStudentPassword(String username)
+    {
+        String password = null;
+        String queryToFindPasword = null;
+             queryToFindPasword = "SELECT student_password from students WHERE student_username = ?";
+        try (Connection connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword)){
+                preparedStatement.setString(1, username);
+                ResultSet rs = preparedStatement.executeQuery();
+                if(rs.next()){
+                    password = rs.getString("student_password");
+
+                }
+            }catch(SQLException throwables){
+                throwables.printStackTrace();;
+            }
+            return password;
+    }
+    
                 
-                
-                
-                
-                // public static List<putEditMarks> getMarks(int student_id){
-    //     List <putEditMarks> marks = new ArrayList<>();
-
-    //     try (Connection connection = DBUtils.getConnection();
-    //     PreparedStatement preparedStatement = connection.prepareStatement(queryAccordingToStudent_id)){
-        
-    //     preparedStatement.setInt(1, student_id);
-    //     preparedStatement.executeQuery();
-
-    //     //PreparedStatement allMarks = connection.prepareStatement("SELECT * FROM marks");
-    //     ResultSet rs = preparedStatement.executeQuery();
-
-    //     while(rs.next()){
-
-    //         int student_idd = rs.getInt("student_id");
-    //         String teacher_course = rs.getString("teacher_course");
-    //         int mark = rs.getInt("mark");
-    //         marks.add(new putEditMarks(student_idd,teacher_course,mark));
-    //     }
-
-    //     } catch (SQLException throwables){
-    //         throwables.printStackTrace();
-    //     }
-    //     return marks;
-    // }
 }
