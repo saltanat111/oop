@@ -19,6 +19,7 @@ public class adminCRUDUtils {
     private static final String INSERT_INTO_parents = "INSERT INTO parents (parent_username,parent_password,student_id) VALUES (? ,? ,?);";
     private static final String INSERT_INTO_students = "INSERT INTO students (student_id,student_username,student_password) VALUES (? ,? ,?);";
     private static final String INSERT_INTO_teachers = "INSERT INTO teachers (teacher_username,teacher_password,teacher_course,teacher_course_id) VALUES (?,?,?,?);";
+    private static final String UPDATE_student = "UPDATE students SET student_username = ?,student_password=? WHERE student_id = ?;";
 
 
     public static List<seeAllMarks> getMarks(String query){
@@ -128,6 +129,35 @@ public class adminCRUDUtils {
             throwables.printStackTrace();
         }
         return createdTeacher;
+    }
+    public static List<student> updateStudentProfile(int student_id, String student_username,String student_password)
+    {
+        List <student> updateStudents = new ArrayList<>();
+        try (Connection connection = DBUtils.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_student))        {
+            preparedStatement.setInt(1, student_id);
+            preparedStatement.setString(2, student_username);
+            preparedStatement.setString(3,student_password);
+            preparedStatement.executeUpdate();
+
+            PreparedStatement allStudents = connection.prepareStatement("SELECT * FROM students");
+            ResultSet rs = allStudents.executeQuery();
+
+            while (rs.next()) {
+                int student_idn = rs.getInt("student_id");
+                String student_usernamee = rs.getString("student_username");
+                String student_passwordd = rs.getString("student_password");
+
+                updateStudents.add(new student (student_idn,student_usernamee,student_passwordd));
+            }
+
+        } 
+        catch (SQLException throwable) 
+        {
+            throwable.printStackTrace();
+        }
+
+        return updateStudents;
     }
     
     

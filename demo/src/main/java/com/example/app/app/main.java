@@ -37,17 +37,17 @@ public class main {
         String passwordCheck = passwordCheck(username, role);
         if (password.equals(passwordCheck))
         {
-            System.out.println("welcome");
+            if (role == 1)
+            {
+                System.out.println("Dear admin, welcome to the grading system!");
+                admin.menu();
+            }
         }
         else{
             System.out.println("bye");
         }
 
-        if (role == 1)
-        {
-            admin.menu();
-        }
-
+        
        // passwordCheck("admin", 1);
 
 
