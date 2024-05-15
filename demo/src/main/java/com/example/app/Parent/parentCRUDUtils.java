@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.app.Admin.DBUtils;
-import com.example.app.Admin.seeAllMarks;
 import com.example.app.Student.putEditMarks;
 
 

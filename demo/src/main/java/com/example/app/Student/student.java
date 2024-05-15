@@ -33,6 +33,7 @@ public class student extends user {
     public static String executeActionAccordingToStudentsChoise(int studentChoise,int student_id) {
        String resultToReturn = null;
        List <putEditMarks> myMarks = studentCRUDUtils.getMarks(student_id);
+       
        resultToReturn = myMarks.toString();
        return resultToReturn;
     }

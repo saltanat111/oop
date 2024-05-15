@@ -16,7 +16,7 @@ public class teacherCRUDUtils {
     private static final String INSERT_INTO = "INSERT INTO marks (student_id,teacher_course,mark) VALUES (?, ?, ? );";
     private static final String UPDATE_MARK = "UPDATE marks SET mark = ? WHERE teacher_course = ? and student_id = ? ;";
 
-    public static List<seeAllMarks> getMarks(String query){
+    public static List<seeAllMarks> getMarks(String query,String teacher_coursee){
         List <seeAllMarks> marks = new ArrayList<>();
 
         try (Connection connection = DBUtils.getConnection();
@@ -28,7 +28,10 @@ public class teacherCRUDUtils {
             String student_username = rs.getString("student_username");
             String teacher_course = rs.getString("teacher_course");
             int mark = rs.getInt("mark");
-            marks.add(new seeAllMarks(student_username,teacher_course,mark));
+            if(teacher_course.equals(teacher_coursee))
+            {
+                marks.add(new seeAllMarks(student_username,teacher_course,mark));
+            }
         }
 
         } catch (SQLException throwables){
@@ -55,8 +58,10 @@ public class teacherCRUDUtils {
             int student_idn = rs.getInt("student_id");
             String teacher_coursen = rs.getString("teacher_course");
             int markn = rs.getInt("mark");
-
-            putMarks.add(new putEditMarks(student_idn, teacher_coursen, markn));
+            if(teacher_coursen.equals(teacher_course))
+            {
+                putMarks.add(new putEditMarks(student_idn, teacher_coursen, markn));
+            }
         }
 
         } catch (SQLException throwables){
@@ -66,7 +71,7 @@ public class teacherCRUDUtils {
     }
     public static List<putEditMarks> editMarks(int student_id, String teacher_course,int mark){
         List <putEditMarks> editMarks = new ArrayList<>();
-        //    String INSERT_INTO = "INSERT_INTO marks (student_id,teacher_course,mark) VALUES (?,?,?);";
+        //   UPDATE marks SET mark = ? WHERE teacher_course = ? and student_id = ? ;
         try (Connection connection = DBUtils.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_MARK)){
 
@@ -83,8 +88,10 @@ public class teacherCRUDUtils {
             int student_idn = rs.getInt("student_id");
             String teacher_coursen = rs.getString("teacher_course");
             int markn = rs.getInt("mark");
-
-            editMarks.add(new putEditMarks(student_idn, teacher_coursen, markn));
+            if (teacher_course.equals(teacher_coursen))
+            {
+                editMarks.add(new putEditMarks(student_idn, teacher_coursen, markn));
+            }
         }
 
         } catch (SQLException throwables){

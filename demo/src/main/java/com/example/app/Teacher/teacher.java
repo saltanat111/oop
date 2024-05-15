@@ -1,5 +1,8 @@
 package com.example.app.Teacher;
 
+import java.util.List;
+import java.util.Scanner;
+import com.example.app.Student.putEditMarks;
 import com.example.app.user.user;
 
 public class teacher extends user {
@@ -33,15 +36,47 @@ public class teacher extends user {
         this.teacher_course_id = teacher_course_id;
     }
 
-    public static String executeActionAccordingToTeachersChoise(int teacherChoise) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'executeActionAccordingToTeachersChoise'");
+    public static void executeActionAccordingToTeachersChoise(int teacherChoise,String courseName) {
+        Scanner scan = new Scanner(System.in);
+        if(teacherChoise == 1)
+        {
+            System.out.println("Enter student's id you want to put mark:");
+            int id = scan.nextInt();
+            scan.nextLine();
+            System.out.println("Enter mark you want to put:");
+            int mark = scan.nextInt();
+            scan.nextLine();
+            List<putEditMarks> putMark = teacherCRUDUtils.putMarks(id,courseName,mark);
+            System.out.println(putMark.get(putMark.size()-1));
+        }
+        else if(teacherChoise == 2)
+        {
+            System.out.println("Enter student's id whose mark you want to edit: ");
+            int id = scan.nextInt();
+            scan.nextLine();
+            System.out.println("Enter mark you want to put: ");
+            int mark = scan.nextInt();
+            scan.nextLine();
+            List<putEditMarks> editedMark = teacherCRUDUtils.editMarks(id, courseName, mark);
+            for (int i = 0;i<editedMark.size();i++)
+            {
+                System.out.println(editedMark.get(i));
+            }
+        }
+        else if(teacherChoise == 3)
+        {
+            List<com.example.app.Student.seeAllMarks> myStudentsMarks = teacherCRUDUtils.getMarks("select marks.teacher_course, marks.mark, students.student_username from marks join students on students.student_id = marks.student_id",courseName);
+            for (int i = 0;i<myStudentsMarks.size();i++)
+            {
+                System.out.println(myStudentsMarks.get(i));
+            }
+        }
     }
 
     public static void menu() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'menu'");
+       System.out.println("1 - put mark\n2 - edit mark\n3 - see my students marks");
     }
+
 
     
     

@@ -2,7 +2,6 @@ package com.example.app.Parent;
 
 import java.util.List;
 
-import com.example.app.Admin.seeAllMarks;
 import com.example.app.Student.putEditMarks;
 import com.example.app.user.user;
 
@@ -32,11 +31,15 @@ public class parent extends user{
        System.out.println("1 - show student's marks");
     }
 
-    public static String executeActionAccordingToParentsChoise(int parentChoise, int child_id) {
-        String resultToReturn = null;
+    public static void executeActionAccordingToParentsChoise(int parentChoise, int child_id) {
+       // String resultToReturn = null;
         List<putEditMarks> allMarks = parentCRUDUtils.getMarks(child_id);
-        resultToReturn = allMarks.toString();
-        return resultToReturn;
+        for(int i = 0;i<allMarks.size();i++)
+        {
+            System.out.println(allMarks.get(i));
+        }
+        //resultToReturn = allMarks.toString();
+        //return resultToReturn;
     }
     
     

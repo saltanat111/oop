@@ -9,29 +9,6 @@ import java.util.List;
 
 import com.example.app.Admin.DBUtils;
 
-// public class studentCRUDUtils {//select marks.teacher_course, marks.mark, students.student_username from marks join students on students.student_id = marks.student_id
-//     private static String queryAccordingToStudent_id = "select marks.teacher_course, marks.mark, students.student_username from marks join students on students.student_id = marks.student_id WHERE student_id = ?;";
-
-//      public static List<seeAllMarks> getMarks(int student_id){
-//         List <seeAllMarks> marks = new ArrayList<>();
-
-//         try (Connection connection = DBUtils.getConnection();
-//         PreparedStatement preparedStatement = connection.prepareStatement(queryAccordingToStudent_id)){
-//         ResultSet rs = preparedStatement.executeQuery();
-
-//         while(rs.next()){
-
-//             String student_username = rs.getString("student_username");
-//             String teacher_course = rs.getString("teacher_course");
-//             int mark = rs.getInt("mark");
-//             marks.add(new seeAllMarks(student_username,teacher_course,mark));
-//         }
-
-//         } catch (SQLException throwables){
-//             throwables.printStackTrace();
-//         }
-//         return marks;
-//     }
 public class studentCRUDUtils {
     private static String queryAccordingToStudent_id = "SELECT * FROM marks WHERE student_id = ?;";
 

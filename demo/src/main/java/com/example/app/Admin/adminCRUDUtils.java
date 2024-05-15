@@ -7,12 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.app.Admin.DBUtils;
 import com.example.app.Parent.parent;
 import com.example.app.Student.seeAllMarks;
 import com.example.app.Student.student;
 import com.example.app.Teacher.teacher;
-import com.example.app.Student.putEditMarks;
 
 public class adminCRUDUtils {
 
@@ -21,7 +19,7 @@ public class adminCRUDUtils {
     private static final String INSERT_INTO_teachers = "INSERT INTO teachers (teacher_username,teacher_password,teacher_course,teacher_course_id) VALUES (?,?,?,?);";
     private static final String UPDATE_student = "UPDATE students SET student_username = ?,student_password=? WHERE student_id = ?;";
     private static final String UPDATE_teacher = "UPDATE teachers SET teacher_password = ?,teacher_course = ?,teacher_course_id = ? WHERE teacher_username = ?;";
-    private static final String UPDATE_parent = "UPDATE teachers SET parent_password = ?,student_id = ? WHERE parent_username = ?;";
+    private static final String UPDATE_parent = "UPDATE parents SET parent_password = ?,student_id = ? WHERE parent_username = ?;";
 
 
     public static List<seeAllMarks> getMarks(String query){
@@ -174,6 +172,7 @@ public class adminCRUDUtils {
             preparedStatement.setString(2,teacher_course);
             preparedStatement.setInt(3,teacher_course_id);
             preparedStatement.setString(4, teacher_username);
+            preparedStatement.executeUpdate();
 
             PreparedStatement allStudents = connection.prepareStatement("SELECT * FROM teachers");
             ResultSet rs = allStudents.executeQuery();
@@ -206,7 +205,6 @@ public class adminCRUDUtils {
             preparedStatement.setString(1,parent_password);
             preparedStatement.setInt(2, student_id);
             preparedStatement.setString(3,parent_username);
-
             preparedStatement.executeUpdate();
     
             PreparedStatement allMarks = connection.prepareStatement("SELECT * FROM parents");
