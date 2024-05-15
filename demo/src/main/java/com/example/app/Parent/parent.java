@@ -32,14 +32,11 @@ public class parent extends user{
     }
 
     public static void executeActionAccordingToParentsChoise(int parentChoise, int child_id) {
-       // String resultToReturn = null;
         List<putEditMarks> allMarks = parentCRUDUtils.getMarks(child_id);
         for(int i = 0;i<allMarks.size();i++)
         {
             System.out.println(allMarks.get(i));
         }
-        //resultToReturn = allMarks.toString();
-        //return resultToReturn;
     }
     
     

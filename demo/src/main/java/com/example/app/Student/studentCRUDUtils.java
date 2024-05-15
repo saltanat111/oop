@@ -21,9 +21,7 @@ public class studentCRUDUtils {
         preparedStatement.setInt(1, student_id);
         preparedStatement.executeQuery();
 
-        //PreparedStatement allMarks = connection.prepareStatement("SELECT * FROM marks");
         ResultSet rs = preparedStatement.executeQuery();
-
         while(rs.next()){
 
             int student_idd = rs.getInt("student_id");

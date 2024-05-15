@@ -53,6 +53,7 @@ public class main {
                     quit = scan.nextLine();
                     if(quit.equals("yes"))
                     {
+                        System.out.println("Goodbye");
                         System.exit(0);
                     }
                 }
@@ -75,10 +76,6 @@ public class main {
                     teacher.executeActionAccordingToTeachersChoise(teacherChoise,courseName);
                     System.out.println("Do you want to quit?(yes/no)");
                     quit = scan.nextLine();
-                    if(quit.equals("yes"))
-                    {
-                        System.exit(0);
-                    }
                 }
                
             }
@@ -93,8 +90,14 @@ public class main {
                 student.menu();
                 int studentChoise = scan.nextInt();
                 scan.nextLine();
-                String result = student.executeActionAccordingToStudentsChoise(studentChoise,student_id);
-                System.out.println(result);
+                student.executeActionAccordingToStudentsChoise(studentChoise,student_id);
+                System.out.println("Do you want to quit?(yes/no)");
+                quit = scan.nextLine();
+                if(quit.equals("yes"))
+                {
+                    System.out.println("Goodbye");
+                    System.exit(0);
+                }
             }
         }
         else if(role == 4)
@@ -108,11 +111,11 @@ public class main {
                 scan.nextLine();
                 int child_id = getChildIdAccordingToParentUserName(username);
                 parent.executeActionAccordingToParentsChoise(parentChoise,child_id);
-                //System.out.println(result);
             }
         }
 
     }
+
         
     private static int getChildIdAccordingToParentUserName(String username) {
         int child_id = 0;
@@ -134,6 +137,7 @@ public class main {
             }
             return child_id;   
     }
+
     private static String getTeacherCourseNameAccordingToTeacherUserName(String username) {
         String courseName = "";
         String queryToFindPasword = null;
@@ -154,6 +158,7 @@ public class main {
             }
             return courseName;   
     }
+
     private static int getStudentIdAccordingToStudentsUsername (String username) {
         int myID = 0;
         String queryToFindPasword = null;
@@ -187,26 +192,16 @@ public class main {
             PreparedStatement preparedStatement = connection.prepareStatement(queryToFindPasword))
             {
                 preparedStatement.setString(1, username);
-                // preparedStatement.executeQuery();
-                // PreparedStatement passwordd = connection.prepareStatement("Select admin_password from admins where admin_username = ?");
                 ResultSet rs = preparedStatement.executeQuery();
 
                 rs.next();
-                    //System.err.println(rs.getString("admin_username"));
-                    //System.err.println(rs.getString("admin_password"));
-
                     password = rs.getString("admin_password");
-                
-                // Integer i  = rs.next();
-
-                // System.err.println("size = " + i);
-                
-
             }catch(SQLException throwables){
                 throwables.printStackTrace();;
             }
             return password;
     }
+
     public static String getTeacherPassword(String username)
     {
         String password = null;
@@ -225,6 +220,7 @@ public class main {
             }
             return password;
     }
+
     public static String getParentPassword(String username)
     {
         String password = null;
@@ -243,6 +239,7 @@ public class main {
             }
             return password;
     }
+
     public static String getStudentPassword(String username)
     {
         String password = null;
@@ -261,6 +258,5 @@ public class main {
             }
             return password;
     }
-    
-                
+
 }

@@ -19,7 +19,7 @@ public class admin extends user {
         int student_id_for_new_student = 8;
         int teacher_id_for_new_teacher = 6;
         Scanner scan = new Scanner(System.in);
-        //String resultToReturn = "";
+
         if(adminsChoise == 7){
             List<com.example.app.Student.seeAllMarks> allMarks = adminCRUDUtils.getMarks("select marks.teacher_course, marks.mark, students.student_username from marks join students on students.student_id = marks.student_id");
             for (int i = 0;i<allMarks.size();i++)
@@ -54,7 +54,6 @@ public class admin extends user {
             {
                 System.out.println(createTeacher.get(i));
             }
-           // resultToReturn = createTeacher.toString();
         }
         else if(adminsChoise == 4){
 
@@ -68,7 +67,6 @@ public class admin extends user {
             {
                 System.out.println(createStudent.get(i));
             }
-           // resultToReturn = createStudent.toString();
         }
         else if(adminsChoise == 3){
             System.out.println("Enter parent username you want to update:");
@@ -83,7 +81,6 @@ public class admin extends user {
             {
                 System.out.println(updateParent.get(i));
             }
-           // resultToReturn = updateParent.toString();
         }
         else if(adminsChoise == 2){
             System.out.println("Enter teacher's username you want to update :");
@@ -100,7 +97,6 @@ public class admin extends user {
             {
                 System.out.println(updateTeacher.get(i));
             }
-          //  resultToReturn = updateTeacher.toString();
         }
         else if(adminsChoise == 1){
             System.out.println("Enter student's id number you want to update :");
@@ -115,9 +111,7 @@ public class admin extends user {
             {
                 System.out.println(updateStudent.get(i));
             }
-           // resultToReturn = updateStudent.toString();
         }
-
-        //return resultToReturn;
     }
+    
 }

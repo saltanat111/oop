@@ -39,6 +39,7 @@ public class teacherCRUDUtils {
         }
         return marks;
     }
+
     public static List<putEditMarks> putMarks(int student_id, String teacher_course,int mark){
         List <putEditMarks> putMarks = new ArrayList<>();
         //    String INSERT_INTO = "INSERT_INTO marks (student_id,teacher_course,mark) VALUES (?,?,?);";
@@ -69,6 +70,7 @@ public class teacherCRUDUtils {
         }
         return putMarks;
     }
+    
     public static List<putEditMarks> editMarks(int student_id, String teacher_course,int mark){
         List <putEditMarks> editMarks = new ArrayList<>();
         //   UPDATE marks SET mark = ? WHERE teacher_course = ? and student_id = ? ;

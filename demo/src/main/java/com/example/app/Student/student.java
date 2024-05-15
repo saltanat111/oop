@@ -27,15 +27,15 @@ public class student extends user {
     }
 
     public static void menu() {
-        System.out.println("1 - see ma all marks");
+        System.out.println("1 - see my all marks");
     }
 
-    public static String executeActionAccordingToStudentsChoise(int studentChoise,int student_id) {
-       String resultToReturn = null;
+    public static void executeActionAccordingToStudentsChoise(int studentChoise,int student_id) {
        List <putEditMarks> myMarks = studentCRUDUtils.getMarks(student_id);
-       
-       resultToReturn = myMarks.toString();
-       return resultToReturn;
+       for (int i = 0;i<myMarks.size();i++)
+       {
+        System.out.println(myMarks.get(i));
+       }
     }
     
     
