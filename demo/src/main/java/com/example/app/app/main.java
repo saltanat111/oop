@@ -76,6 +76,11 @@ public class main {
                     teacher.executeActionAccordingToTeachersChoise(teacherChoise,courseName);
                     System.out.println("Do you want to quit?(yes/no)");
                     quit = scan.nextLine();
+                    if(quit.equals("yes"))
+                    {
+                        System.out.println("Goodbye");
+                        System.exit(0);
+                    }
                 }
                
             }
@@ -87,17 +92,22 @@ public class main {
             if(password.equals(studentPassword))
             {
                 System.out.println("Dear student welcome to the grading system!\nChoose what do you want to do and enter the number of the command:");
-                student.menu();
-                int studentChoise = scan.nextInt();
-                scan.nextLine();
-                student.executeActionAccordingToStudentsChoise(studentChoise,student_id);
-                System.out.println("Do you want to quit?(yes/no)");
-                quit = scan.nextLine();
-                if(quit.equals("yes"))
+                while(quit.equals("no"))
                 {
-                    System.out.println("Goodbye");
-                    System.exit(0);
+                    student.menu();
+                    int studentChoise = scan.nextInt();
+                    scan.nextLine();
+                    student.executeActionAccordingToStudentsChoise(studentChoise,student_id);
+                    System.out.println("Do you want to quit?(yes/no)");
+                    quit = scan.nextLine();
+                    if(quit.equals("yes"))
+                    {
+                        System.out.println("Goodbye");
+                        System.exit(0);
+                    }
+
                 }
+               
             }
         }
         else if(role == 4)
@@ -106,11 +116,20 @@ public class main {
             if(password.equals(parentPassword))
             {
                 System.out.println("Dear parent welcome to the grading system!\nChoose what do you want to do and enter the number of the command:");
-                parent.menu();
-                int parentChoise = scan.nextInt();
-                scan.nextLine();
-                int child_id = getChildIdAccordingToParentUserName(username);
-                parent.executeActionAccordingToParentsChoise(parentChoise,child_id);
+                while (quit.equals("no"))
+                {
+                    parent.menu();
+                    int parentChoise = scan.nextInt();
+                    scan.nextLine();
+                    int child_id = getChildIdAccordingToParentUserName(username);
+                    parent.executeActionAccordingToParentsChoise(parentChoise,child_id); quit = scan.nextLine();
+                    if(quit.equals("yes"))
+                    {
+                        System.out.println("Goodbye");
+                        System.exit(0);
+                    }
+                }
+                
             }
         }
 
